@@ -1,10 +1,11 @@
+package Codigo.src;
 import java.util.ArrayList;
 
 public class Cliente {
-    private String cadName;
-    private String userName;
-    private String password;
-    private ArrayList<Compra> compras;
+    protected String cadName;
+    protected String userName;
+    protected String password;
+    protected ArrayList<Compra> compras;
 
     public Cliente() {
         this.cadName = "";
