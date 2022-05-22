@@ -1,0 +1,5 @@
+ - Cliente só tem um método?
+ - As heranças de cliente não têm métodos?
+ - OK para esta herança, mas hoje temos alternativas
+ - ShopHistory não tem parâmetro?
+ - Jogo não tem subclasses ou subregras? "Categoria" ***não pode*** ser string. Se tem regras e dados, é classe
