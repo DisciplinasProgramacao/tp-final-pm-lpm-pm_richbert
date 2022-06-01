@@ -50,6 +50,10 @@ public class Cliente {
         return this.password;
     }
 
+    public void newBuy() {
+        
+    }
+
     public void shopHistory() {
         compras.stream().forEach((compra) -> {
             System.out.println("---------------");
