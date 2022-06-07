@@ -54,28 +54,37 @@ public class Compra {
     // Rules functions
     public double discountRule() {
         double discount = 0.0;
-        int qntLancamentos = 0;
-        int qntPremiuns = 0;
-        int qntRegulares = 0;
+        int pontos = 0;
 
-        this.games.stream().forEach((game) -> {
-            switch(game.getCategory()) {
-                case "LANCAMENTO":
-                    qntLancamentos++;
-                    break;
-                case "PREMIUM":
-                    qntPremiuns++;
-                    break;
-                case "REGULAR":
-                    qntRegulares++;
-                    break;
-            }
-        });
+        pontos += this.games.stream().mapToInt(Jogo::getPontos).sum();
 
-        if(qntLancamentos >= 2) {
-
+        if(pontos >= 13) {
+            discount += 0.2;
+        } else if(pontos >= 10) {
+            discount += 0.1;
         }
 
+        discount += this.client.getDiscount();
+
         return discount;
+    }
+
+    public void printGames() {
+        this.games.stream().forEach((game) -> {
+            game.toString();
+        });
+    }
+    
+    public double getTotalPrice() {
+        return this.games.stream().mapToDouble(Jogo::getPreco()).sum();
+    }
+
+    public double getFinalPrice() {
+        double preco = getTotalPrice();
+        double disconto = discountRule();
+
+        preco += (preco * disconto);
+
+        return preco;
     }
 }

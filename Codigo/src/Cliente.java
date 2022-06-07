@@ -5,6 +5,7 @@ public class Cliente {
     protected String cadName;
     protected String userName;
     protected String password;
+    protected double discount;
     protected ArrayList<Compra> compras;
 
     public Cliente() {
@@ -49,7 +50,12 @@ public class Cliente {
     public String getPassword() {
         return this.password;
     }
+    
+    public double getDiscount() {
+        return this.discount;
+    }
 
+    //Rule methods
     public void newBuy() {
         
     }
@@ -58,10 +64,13 @@ public class Cliente {
         compras.stream().forEach((compra) -> {
             System.out.println("---------------");
             System.out.println("Data da compra: " + compra.getDate());
-            System.out.println("Jogos comprados: " + compra.printGames());
+            System.out.println("Jogos comprados: ");
+            compra.printGames();
             System.out.println("Preço total da compra: " + compra.getTotalPrice());
             System.out.println("Preço final da compra: " + compra.getFinalPrice());
             System.out.println("---------------");
         });
     }
+
+
 }
