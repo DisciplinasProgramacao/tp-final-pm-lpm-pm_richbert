@@ -1,11 +1,11 @@
 package Codigo.src;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Compra {
     private Cliente client;
     private ArrayList<Jogo> games;
-    private Date date;
+    private LocalDate date;
     private double price;
     private double sellingPrice;
 
@@ -18,7 +18,7 @@ public class Compra {
         this.games = games;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -39,7 +39,7 @@ public class Compra {
         return this.games;
     }
     
-    public Date getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
     
@@ -76,7 +76,7 @@ public class Compra {
     }
     
     public double getTotalPrice() {
-        return this.games.stream().mapToDouble(Jogo::getPreco()).sum();
+        return this.games.stream().mapToDouble(Jogo::getPrice).sum();
     }
 
     public double getFinalPrice() {
