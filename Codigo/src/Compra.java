@@ -76,7 +76,7 @@ public class Compra {
     }
     
     public double getTotalPrice() {
-        return this.games.stream().mapToDouble(Jogo::getPreco()).sum();
+        return this.games.stream().mapToDouble(Jogo::getPrice).sum();
     }
 
     public double getFinalPrice() {

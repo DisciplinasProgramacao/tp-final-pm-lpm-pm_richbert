@@ -6,6 +6,7 @@ public class Cliente {
     protected String userName;
     protected String password;
     protected double discount;
+    protected double monthlyPayment;
     protected ArrayList<Compra> compras;
 
     public Cliente() {
@@ -18,6 +19,8 @@ public class Cliente {
         this.cadName = cadName;
         this.userName = userName;
         this.password = password;
+        this.discount = 0.0;
+        this.monthlyPayment = 0.0;
     }
 
     public Cliente(String cadName, String userName, String password, ArrayList<Compra> compras) {
@@ -25,6 +28,8 @@ public class Cliente {
         this.userName = userName;
         this.password = password;
         this.compras = compras;
+        this.discount = 0.0;
+        this.monthlyPayment = 0.0;
     }
 
     //Setters
@@ -36,6 +41,9 @@ public class Cliente {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public void setMonthlyPayment(double monthlyPayment) {
+        this.monthlyPayment = monthlyPayment;
     }
     
     //Getters
@@ -53,6 +61,10 @@ public class Cliente {
     
     public double getDiscount() {
         return this.discount;
+    }
+
+    public double getMonthlyPayment() {
+        return this.monthlyPayment;
     }
 
     //Rule methods
