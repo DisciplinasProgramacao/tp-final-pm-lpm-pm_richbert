@@ -2,12 +2,11 @@ package Codigo.src;
 import java.util.ArrayList;
 
 public class Cliente {
-    protected String cadName;
-    protected String userName;
-    protected String password;
-    protected double discount;
-    protected double monthlyPayment;
-    protected ArrayList<Compra> compras;
+    private String cadName;
+    private String userName;
+    private String password;
+    private ArrayList<Compra> compras;
+    private TipoCliente tipo;
 
     public Cliente() {
         this.cadName = "";
@@ -19,8 +18,14 @@ public class Cliente {
         this.cadName = cadName;
         this.userName = userName;
         this.password = password;
-        this.discount = 0.0;
-        this.monthlyPayment = 0.0;
+        this.tipo = TipoCliente.CADASTRADO;
+    }
+
+    public Cliente(String cadName, String userName, String password, TipoCliente tipo) {
+        this.cadName = cadName;
+        this.userName = userName;
+        this.password = password;
+        this.tipo = tipo;
     }
 
     public Cliente(String cadName, String userName, String password, ArrayList<Compra> compras) {
@@ -28,8 +33,15 @@ public class Cliente {
         this.userName = userName;
         this.password = password;
         this.compras = compras;
-        this.discount = 0.0;
-        this.monthlyPayment = 0.0;
+        this.tipo = TipoCliente.CADASTRADO;
+    }
+
+    public Cliente(String cadName, String userName, String password, ArrayList<Compra> compras, TipoCliente tipo) {
+        this.cadName = cadName;
+        this.userName = userName;
+        this.password = password;
+        this.compras = compras;
+        this.tipo = tipo;
     }
 
     //Setters
@@ -41,9 +53,6 @@ public class Cliente {
     }
     public void setPassword(String password) {
         this.password = password;
-    }
-    public void setMonthlyPayment(double monthlyPayment) {
-        this.monthlyPayment = monthlyPayment;
     }
     
     //Getters
@@ -60,11 +69,11 @@ public class Cliente {
     }
     
     public double getDiscount() {
-        return this.discount;
+        return this.tipo.getDiscount();
     }
 
     public double getMonthlyPayment() {
-        return this.monthlyPayment;
+        return this.tipo.getMonthlyPayment();
     }
 
     //Rule methods
