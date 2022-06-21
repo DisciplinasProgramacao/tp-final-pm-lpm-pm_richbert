@@ -87,4 +87,9 @@ public class Compra {
 
         return preco;
     }
+
+    public void addGame(Jogo jogo) {
+        this.games.add(jogo);
+        jogo.addVendido();
+    }
 }
