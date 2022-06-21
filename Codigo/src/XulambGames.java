@@ -10,7 +10,7 @@ public abstract class XulambGames {
 
     public abstract double monthlyAmountSold(int mes, int ano);
 
-    public abstract String bestSoldGame();
+    public abstract String bestSoldGame(ArrayList<Jogo> jogos);
 
-    public abstract String leastSoldGame();
+    public abstract String leastSoldGame(ArrayList<Jogo> jogos);
 }
