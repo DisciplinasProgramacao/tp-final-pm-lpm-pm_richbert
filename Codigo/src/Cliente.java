@@ -79,7 +79,7 @@ public class Cliente {
     }
 
     //Rule methods
-    public void newBuy(ArrayList<Jogo> games, Scanner scanner) {
+    public Compra newBuy(ArrayList<Jogo> games, Scanner scanner) {
         int op = 1;
         Compra compra = new Compra(this);
 
@@ -111,6 +111,8 @@ public class Cliente {
 
             }
         } while(op > 0);
+
+        return compra;
     }
 
     public void shopHistory() {

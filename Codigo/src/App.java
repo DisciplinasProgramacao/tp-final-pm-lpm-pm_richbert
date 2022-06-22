@@ -175,6 +175,10 @@ public class App {
 
             cliente = clientes.get(codCliente);
         }
+
+        Compra compra = cliente.newBuy(jogos, teclado);
+
+        historico.addPurchase(compra);
 	}
 	
 	public static void historicClient() {
