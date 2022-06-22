@@ -98,9 +98,11 @@ public class Cliente {
                 System.out.println("\nDeseja cadastrar mais jogos? (1- Sim / 2- Não)");
                 op = scanner.nextInt();
                 
-                if(op != 1 && op != 2) {
-                    
+                while(op != 1 && op != 2){
+                    System.out.println("Opção inválida! - Digite a opção novamente: (1- Sim / 2- Não)");
+                    op = scanner.nextInt();
                 }
+
             }
         } while(op > 0);
     }
