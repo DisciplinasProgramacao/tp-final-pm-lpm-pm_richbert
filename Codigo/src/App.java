@@ -13,12 +13,14 @@ import java.util.Scanner;
 public class App {
 
     static Scanner teclado = new Scanner(System.in);
-    private static final String NOME_ARQUIVO_JOGOS = "./jogos.txt";
+    private static final String NOME_ARQUIVO_JOGOS = "./jogos.bin";
+    private static final String NOME_ARQUIVO_CLIENTE = "./cliente.bin";
+    private static final String NOME_ARQUIVO_HiSTORICO = "./historico.bin";
     static ArrayList<Jogo> jogos = new ArrayList<Jogo>();
     static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-    static ArrayList<Compra> compras = new ArrayList<Compra>();
+    static Historico historico = null;
     
-    public static ArrayList<Jogo> carregarBinarioJogo(String arq, Scanner teclado) {
+    public static ArrayList<Jogo> carregarBinarioJogo(String arq) {
 		ArrayList<Jogo> jogos = null;
 		try {
 			ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(arq));
@@ -35,7 +37,7 @@ public class App {
 		return jogos;
 	}
     
-    public static ArrayList<Cliente> carregarBinarioCliente(String arq, Scanner teclado) {
+    public static ArrayList<Cliente> carregarBinarioCliente(String arq) {
 		ArrayList<Cliente> clientes = null;
 		try {
 			ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(arq));
@@ -52,24 +54,24 @@ public class App {
 		return clientes;
 	}
     
-    public static ArrayList<Compra> carregarBinarioCompra(String arq, Scanner teclado) {
-		ArrayList<Compra> compras = null;
+    public static Historico carregarBinarioHistorico(String arq) {
+		Historico hist = null;
 		try {
 			ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(arq));
-			compras = (ArrayList<Compra>) entrada.readObject();
+			hist = (Historico) entrada.readObject();
 			entrada.close();
 		} catch (FileNotFoundException fe) {
-			compras = new ArrayList<>(200);
+			hist = null;
 		} catch (ClassNotFoundException ce) {
 			System.out.println("Problema na conversão dos dados: classe inválida. Contacte o suporte.");
 		} catch (IOException ie) {
 			System.out.println("Problemas na operação de E/S. Contacte o suporte");
 			System.out.println(ie.getMessage());
 		}
-		return compras;
+		return hist;
 	}
 
-	public static void salvarBinarioJogo(ArrayList<Jogo> jogos, String arq, Scanner teclado) {
+	public static void salvarBinarioJogo(ArrayList<Jogo> jogos, String arq) {
 		ObjectOutputStream saida = null;
 		try {
 			saida = new ObjectOutputStream(new FileOutputStream(arq));
@@ -83,7 +85,7 @@ public class App {
 		}
 	}
 	
-	public static void salvarBinarioCliente(ArrayList<Cliente> clientes, String arq, Scanner teclado) {
+	public static void salvarBinarioCliente(ArrayList<Cliente> clientes, String arq) {
 		ObjectOutputStream saida = null;
 		try {
 			saida = new ObjectOutputStream(new FileOutputStream(arq));
@@ -97,11 +99,11 @@ public class App {
 		}
 	}
 	
-	public static void salvarBinarioCompra(ArrayList<Compra> compras, String arq, Scanner teclado) {
+	public static void salvarBinarioHistorico(Historico historico, String arq) {
 		ObjectOutputStream saida = null;
 		try {
 			saida = new ObjectOutputStream(new FileOutputStream(arq));
-			saida.writeObject(compras);
+			saida.writeObject(historico);
 			saida.close();
 		} catch (FileNotFoundException fe) {
 			System.out.println("Arquivo não encontrado, ou permissão negada. Tente novamente com outro arquivo");
@@ -162,7 +164,17 @@ public class App {
 	}
 
 	public static void registrationPurchase() {
-		
+		System.out.println("Digite o código do cliente:");
+        int codCliente = teclado.nextInt();
+
+        Cliente cliente = clientes.get(codCliente);
+
+        while(cliente == null) {
+            System.out.println("\nCliente inválido! Digite novamente o código de cliente: ");
+            codCliente = teclado.nextInt();
+
+            cliente = clientes.get(codCliente);
+        }
 	}
 	
 	public static void historicClient() {
@@ -178,18 +190,14 @@ public class App {
 
 	
     public static void main(String[] args) {
-    	ArrayList<Jogo> jogos = null;
-    	ArrayList<Cliente> clientes = null;
-    	ArrayList<Compra> compras = null;
-		Historico historico = new Historico();
-    	jogos = carregarBinarioJogo("dados.bin", teclado);
-    	clientes = carregarBinarioCliente("dados.bin", teclado);
-    	compras = carregarBinarioCompra("dados.bin", teclado);
+        jogos = carregarBinarioJogo(NOME_ARQUIVO_JOGOS);
+    	clientes = carregarBinarioCliente(NOME_ARQUIVO_CLIENTE);
+    	historico = carregarBinarioHistorico(NOME_ARQUIVO_HiSTORICO);
     	
         int op = -1;
 
 		do {
-			op = menu(teclado);
+			op = menu();
 
 			switch (op) {
 			case 1:
@@ -237,12 +245,12 @@ public class App {
 			}
 		} while (op != 0);
 		
-		salvarBinarioJogo(jogos, "dados.bin", teclado);
-		salvarBinarioCliente(clientes, "dados.bin", teclado);
-		salvarBinarioCompra(compras, "dados.bin", teclado);
+		salvarBinarioJogo(jogos, "dados.bin");
+		salvarBinarioCliente(clientes, "dados.bin");
+		salvarBinarioHistorico(historico, "dados.bin");
     }
 
-    public static int menu(Scanner teclado) {
+    public static int menu() {
 		int op = -1;
 		try {
 			System.out.println("1 - Cadastrar cliente");
