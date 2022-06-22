@@ -102,6 +102,12 @@ public class Cliente {
                     System.out.println("Opção inválida! - Digite a opção novamente: (1- Sim / 2- Não)");
                     op = scanner.nextInt();
                 }
+                
+                double price = compra.getTotalPrice();
+                double totalPrice = compra.getFinalPrice();
+
+                System.out.println("Preço total da compra: " + price);
+                System.out.println("Preço final da compra após descontos: " + totalPrice);
 
             }
         } while(op > 0);
