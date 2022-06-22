@@ -175,15 +175,13 @@ public class App {
 			}
 		}
 	}
-	
-	public static void calculateNewPurchase() {
-		
-	}
+
 	
     public static void main(String[] args) {
     	ArrayList<Jogo> jogos = null;
     	ArrayList<Cliente> clientes = null;
     	ArrayList<Compra> compras = null;
+		Historico historico = new Historico();
     	jogos = carregarBinarioJogo("dados.bin", teclado);
     	clientes = carregarBinarioCliente("dados.bin", teclado);
     	compras = carregarBinarioCompra("dados.bin", teclado);
@@ -209,9 +207,25 @@ public class App {
 			case 4:
 				historicClient();
 				break;
-
+			
 			case 5:
+				System.out.println("Digite o ano desejado: ");
+				Integer year = teclado.nextInt();
+				System.out.println("Digite o mês desejado: ");
+				Integer month = teclado.nextInt();
+				historico.monthlyAmountSold(month, year);
+				break;
 
+			case 6:
+				historico.avgSellPrice();
+				break;
+			
+			case 7:
+				historico.bestSoldGame(jogos);
+				break;
+			
+			case 8:
+				historico.leastSoldGame(jogos);
 				break;
 				
 			case 0:
@@ -235,11 +249,10 @@ public class App {
 			System.out.println("2 - Cadastrar jogo");
 			System.out.println("3 - Cadastrar compra");
 			System.out.println("4 - Histórico de um cliente");
-			System.out.println("5 - Cálculo do valor da uma nova compra");
-            System.out.println("6 - Valor mensal vendido");
-			System.out.println("7 - Valor médio das compras");
-			System.out.println("8 - Jogo mais vendido");
-			System.out.println("9 - Jogo menos vendido");
+            System.out.println("5 - Valor mensal vendido");
+			System.out.println("6 - Valor médio das compras");
+			System.out.println("7 - Jogo mais vendido");
+			System.out.println("8 - Jogo menos vendido");
 			System.out.println("0 - Sair");
 			op = teclado.nextInt();
 
