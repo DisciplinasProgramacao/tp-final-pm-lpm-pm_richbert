@@ -1,5 +1,7 @@
 package Codigo.src;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Cliente {
     private String cadName;
@@ -77,8 +79,30 @@ public class Cliente {
     }
 
     //Rule methods
-    public void newBuy() {
-        
+    public void newBuy(ArrayList<Jogo> games, Scanner scanner) {
+        int op = 1;
+        Compra compra = new Compra(this);
+
+        do {
+            int codJogo = -1;
+
+            System.out.println("Digite o código do jogo:");
+            codJogo = scanner.nextInt();
+
+            Jogo game = games.get(codJogo);
+            
+            if(game != null) {
+                System.out.println("\nJogo não cadastrado com o código informado!");
+            } else {
+                compra.addGame(game);
+                System.out.println("\nDeseja cadastrar mais jogos? (1- Sim / 2- Não)");
+                op = scanner.nextInt();
+                
+                if(op != 1 && op != 2) {
+                    
+                }
+            }
+        } while(op > 0);
     }
 
     public void shopHistory() {

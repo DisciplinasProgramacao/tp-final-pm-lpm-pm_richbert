@@ -9,6 +9,22 @@ public class Compra {
     private double price;
     private double sellingPrice;
 
+    public Compra(Cliente client) {
+        this.client = client;
+        this.games = new ArrayList<Jogo>();
+        this.date = LocalDate.now();
+        this.price = 0;
+        this.sellingPrice = 0;
+    }
+
+    public Compra(Cliente client, ArrayList<Jogo> games, LocalDate date, double price, double sellingPrice) {
+        this.client = client;
+        this.games = games;
+        this.date = date;
+        this.price = price;
+        this.sellingPrice = sellingPrice;
+    }
+
     //Setters
     public void setClient(Cliente client) {
         this.client = client;
