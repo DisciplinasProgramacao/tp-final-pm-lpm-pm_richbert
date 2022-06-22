@@ -76,9 +76,9 @@ public class App {
 			saida.writeObject(jogos);
 			saida.close();
 		} catch (FileNotFoundException fe) {
-			System.out.println("Arquivo n�o encontrado, ou permiss�o negada. Tente novamente com outro arquivo");
+			System.out.println("Arquivo não encontrado, ou permissão negada. Tente novamente com outro arquivo");
 		} catch (IOException ex) {
-			System.out.println("Problemas na opera��o de E/S. Contacte o suporte");
+			System.out.println("Problemas na operação de E/S. Contacte o suporte");
 			System.out.println(ex.getMessage());
 		}
 	}
@@ -90,9 +90,9 @@ public class App {
 			saida.writeObject(clientes);
 			saida.close();
 		} catch (FileNotFoundException fe) {
-			System.out.println("Arquivo n�o encontrado, ou permiss�o negada. Tente novamente com outro arquivo");
+			System.out.println("Arquivo não encontrado, ou permissão negada. Tente novamente com outro arquivo");
 		} catch (IOException ex) {
-			System.out.println("Problemas na opera��o de E/S. Contacte o suporte");
+			System.out.println("Problemas na operação de E/S. Contacte o suporte");
 			System.out.println(ex.getMessage());
 		}
 	}
@@ -104,9 +104,9 @@ public class App {
 			saida.writeObject(compras);
 			saida.close();
 		} catch (FileNotFoundException fe) {
-			System.out.println("Arquivo n�o encontrado, ou permiss�o negada. Tente novamente com outro arquivo");
+			System.out.println("Arquivo não encontrado, ou permissão negada. Tente novamente com outro arquivo");
 		} catch (IOException ex) {
-			System.out.println("Problemas na opera��o de E/S. Contacte o suporte");
+			System.out.println("Problemas na operação de E/S. Contacte o suporte");
 			System.out.println(ex.getMessage());
 		}
 	}
@@ -201,7 +201,7 @@ public class App {
 				break;
 
 			case 3:
-
+                registrationPurchase();
 				break;
 
 			case 4:

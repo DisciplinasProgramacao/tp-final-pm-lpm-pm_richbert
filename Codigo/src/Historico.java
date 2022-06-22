@@ -4,7 +4,14 @@ import java.util.ArrayList;
 
 public class Historico extends XulambGames{
     private ArrayList<Compra> compras;
-    private double soma;
+
+    public Historico(ArrayList<Compra> compras) {
+        this.compras = compras;
+    }
+
+    public void addPurchase(Compra compra) {
+        this.compras.add(compra);
+    }
 
     @Override
     public double avgSellPrice(){
