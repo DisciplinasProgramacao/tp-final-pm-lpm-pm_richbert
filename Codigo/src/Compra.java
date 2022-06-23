@@ -99,7 +99,7 @@ public class Compra {
         double preco = getTotalPrice();
         double disconto = discountRule();
 
-        preco += (preco * disconto);
+        preco -= (preco * disconto);
 
         return preco;
     }

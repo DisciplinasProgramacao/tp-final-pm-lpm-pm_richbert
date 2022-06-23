@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class App {
@@ -115,18 +116,38 @@ public class App {
 	
 	public static void registrationClient() {
 		System.out.println("Digite o nome: ");
-    	String name = teclado.nextLine();
+    	String name = teclado.nextLine().toUpperCase();
+    	
+        System.out.println("Digite o tipo: (CADASTRADO, EMPOLGADO, FANATICO)");
+    	String tipo = teclado.nextLine().toUpperCase();
     	
     	System.out.println("Digite o apelido: ");
-    	String username = teclado.nextLine();
+    	String username = teclado.nextLine().toUpperCase();
     	
     	System.out.println("Digite uma senha: ");
     	String password = teclado.nextLine();
     	
-    	Cliente cliente = new Cliente(name, username, password);
+    	Cliente cliente = new Cliente(name, username, password, clientCategoryChoice(tipo));
     	clientes.add(cliente);
     	
     	System.out.println("\nCliente cadastrado com sucesso!\n");
+	}
+
+    public static TipoCliente clientCategoryChoice(String category) {
+		switch(category) {
+            case "FANATICO":
+                return TipoCliente.FANATICO;   		
+                
+            case "EMPOLGADO":
+                return TipoCliente.EMPOLGADO;
+                
+            case "CADASTRADO":
+                return TipoCliente.CADASTRADO;
+                
+            default:
+                System.out.println("Categoria inválida! Assumindo cadastrado");
+                return TipoCliente.CADASTRADO;
+    	}
 	}
 	
 	public static Categoria categoryChoice(String category) {
@@ -166,17 +187,30 @@ public class App {
 
 	public static void registrationPurchase() {
 		System.out.println("Digite o apelido do cliente:");
-        final String userName = teclado.nextLine().toUpperCase();
+        String userName = teclado.nextLine().toUpperCase();
 
-        Cliente cliente = clientes.stream().filter(c -> c.getUserName() == userName).findFirst().get();
+        Cliente cliente = null;
 
+        for(Cliente client : clientes) {
+            if(client.getUserName().compareTo(userName) == 0) {
+                cliente = client;
+            }
+        }
+        
         if(cliente == null) {
             throw new ClientNotExistsException();
         }
 
         Compra compra = cliente.newBuy(jogos, teclado);
 
-        historico.addPurchase(compra);
+        if(historico == null) {
+            ArrayList<Compra> comp = new ArrayList<Compra>();
+            comp.add(compra);
+            historico = new Historico(comp);
+        } else {
+            historico.addPurchase(compra);
+        }
+
 	}
 	
 	public static void historicClient() {
@@ -184,10 +218,12 @@ public class App {
 		String apelido = teclado.nextLine().toUpperCase();
 		
 		for (Cliente cliente : clientes) {
-			if(cliente.getUserName() == apelido) {
+			if(cliente.getUserName().compareTo(apelido) == 0) {
 				cliente.shopHistory(); 
 			}
 		}
+
+        System.out.println("\n\n");
 	}
 
 	
@@ -223,19 +259,36 @@ public class App {
 				Integer year = teclado.nextInt();
 				System.out.println("Digite o mês desejado: ");
 				Integer month = teclado.nextInt();
-				historico.monthlyAmountSold(month, year);
+				double monthlyAmountSold = historico.monthlyAmountSold(month, year);
+                
+                System.out.println("------------------------------------------");
+                System.out.println("O valor vendido no mês foi de: " + monthlyAmountSold);
+                System.out.println("------------------------------------------\n\n");
 				break;
 
 			case 6:
-				historico.avgSellPrice();
+				double avgSellPrice = historico.avgSellPrice();
+
+                System.out.println("------------------------------------------");
+                System.out.println("O valor médio de vendas é de: " + avgSellPrice);
+                System.out.println("------------------------------------------\n\n");
 				break;
 			
 			case 7:
-				historico.bestSoldGame(jogos);
+				String bestSoldGame = historico.bestSoldGame(jogos);
+                
+                System.out.println("------------------------------------------");
+                System.out.println("O jogo mais vendido é: " + bestSoldGame);
+                System.out.println("------------------------------------------\n\n");
 				break;
 			
 			case 8:
-				historico.leastSoldGame(jogos);
+                String leastSoldGame = historico.leastSoldGame(jogos);
+
+                
+                System.out.println("------------------------------------------");
+                System.out.println("O jogo menos vendido é: " + leastSoldGame);
+                System.out.println("------------------------------------------\n\n");
 				break;
 				
 			case 0:
@@ -247,9 +300,9 @@ public class App {
 			}
 		} while (op != 0);
 		
-		salvarBinarioJogo(jogos, "dados.bin");
-		salvarBinarioCliente(clientes, "dados.bin");
-		salvarBinarioHistorico(historico, "dados.bin");
+		salvarBinarioJogo(jogos, NOME_ARQUIVO_JOGOS);
+		salvarBinarioCliente(clientes, NOME_ARQUIVO_CLIENTE);
+		salvarBinarioHistorico(historico, NOME_ARQUIVO_HiSTORICO);
     }
 
     public static int menu() {

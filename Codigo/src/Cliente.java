@@ -14,6 +14,7 @@ public class Cliente {
         this.cadName = "";
         this.userName = "";
         this.password = "";
+        this.compras = new ArrayList<Compra>();
     }
 
     public Cliente(String cadName, String userName, String password) {
@@ -21,6 +22,7 @@ public class Cliente {
         this.userName = userName;
         this.password = password;
         this.tipo = TipoCliente.CADASTRADO;
+        this.compras = new ArrayList<Compra>();
     }
 
     public Cliente(String cadName, String userName, String password, TipoCliente tipo) {
@@ -28,6 +30,7 @@ public class Cliente {
         this.userName = userName;
         this.password = password;
         this.tipo = tipo;
+        this.compras = new ArrayList<Compra>();
     }
 
     public Cliente(String cadName, String userName, String password, ArrayList<Compra> compras) {
@@ -84,17 +87,22 @@ public class Cliente {
         Compra compra = new Compra(this);
 
         do {
-            int codJogo = -1;
-
             System.out.println("Digite o código do jogo:");
-            codJogo = scanner.nextInt();
-
-            Jogo game = games.get(codJogo);
+            final int codJogo = scanner.nextInt();
             
-            if(game != null) {
+            Jogo jogo = null;
+
+            for(Jogo game : games) {
+                if(game.getId() == codJogo) {
+                    jogo = game;
+                }
+            }
+
+            
+            if(jogo == null) {
                 System.out.println("\nJogo não cadastrado com o código informado!");
             } else {
-                compra.addGame(game);
+                compra.addGame(jogo);
                 System.out.println("\nDeseja cadastrar mais jogos? (1- Sim / 2- Não)");
                 op = scanner.nextInt();
                 
@@ -102,28 +110,29 @@ public class Cliente {
                     System.out.println("Opção inválida! - Digite a opção novamente: (1- Sim / 2- Não)");
                     op = scanner.nextInt();
                 }
-                
-                double price = compra.getTotalPrice();
-                double totalPrice = compra.getFinalPrice();
-
-                System.out.println("Preço total da compra: " + price);
-                System.out.println("Preço final da compra após descontos: " + totalPrice);
-
             }
-        } while(op > 0);
+        } while(op != 2);
+
+        double price = compra.getTotalPrice();
+        double totalPrice = compra.getFinalPrice();
+
+        System.out.println("Preço total da compra: " + price);
+        System.out.println("Preço final da compra após descontos: " + totalPrice + "\n\n");
+
+        this.compras.add(compra);
 
         return compra;
     }
 
     public void shopHistory() {
         compras.stream().forEach((compra) -> {
-            System.out.println("---------------");
+            System.out.println("------------------------------------------");
             System.out.println("Data da compra: " + compra.getDate());
             System.out.println("Jogos comprados: ");
             compra.printGames();
             System.out.println("Preço total da compra: " + compra.getTotalPrice());
             System.out.println("Preço final da compra: " + compra.getFinalPrice());
-            System.out.println("---------------");
+            System.out.println("------------------------------------------");
         });
     }
 }

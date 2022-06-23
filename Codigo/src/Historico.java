@@ -37,7 +37,7 @@ public class Historico extends XulambGames{
                                  ))
                                  .get();
 
-        return bestSoldGame.toString();
+        return bestSoldGame.getName();
     }
 
     @Override
@@ -48,6 +48,6 @@ public class Historico extends XulambGames{
                                  ))
                                  .get();
 
-        return bestSoldGame.toString();
+        return bestSoldGame.getName();
     }
 }
