@@ -92,12 +92,7 @@ public class Cliente {
             
             Jogo jogo = null;
 
-            for(Jogo game : games) {
-                if(game.getId() == codJogo) {
-                    jogo = game;
-                }
-            }
-
+            jogo = games.stream().filter(j -> j.getId() == codJogo).findFirst().get();
             
             if(jogo == null) {
                 System.out.println("\nJogo não cadastrado com o código informado!");

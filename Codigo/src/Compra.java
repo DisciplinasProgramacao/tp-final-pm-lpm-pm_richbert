@@ -86,9 +86,11 @@ public class Compra {
     }
 
     public void printGames() {
+        System.out.println("************************");
         this.games.stream().forEach((game) -> {
-            game.toString();
+            System.out.println(game.getName());
         });
+        System.out.println("************************");
     }
     
     public double getTotalPrice() {
